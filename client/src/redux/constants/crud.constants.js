@@ -1,0 +1,8 @@
+export const crudConstants = {
+  ADD: "ADD_ARTICLE",
+  GET: "GET_ARTICLE",
+  DEL: "DEL_ARTICLE",
+  EDIT: "EDIT_ARTICLE",
+  EDIT_ENTRY: "EDIT_ENTRY",
+  CLEAR_FORM: "CLEAR_FORM"
+};

@@ -1,0 +1,133 @@
+/* LoginPage */
+
+.logo{
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0px 0px 1px);
+}
+
+.login-box {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.login-box h2 {
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+
+.login-box form .form-group label {
+    margin: 0;
+}
+
+.dswelcome h1{
+    margin-top: 5px;
+    padding: 10px 0 10px 0;
+}
+.dsnav{
+    margin: 15px 0 10px 0;
+}
+.dsnav button{
+    margin-left: 7px;
+}
+
+h1, h2 :not(.notct) {
+    background: linear-gradient(to right, #eee, white);
+    border-left: 8px solid #ccc;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+/* Table */
+
+.-filters input{
+    border: 2px solid #ddd !important;
+    margin: 7px 0;
+}
+
+.tablebuttons {
+    min-width: 63px;
+    margin-left: -2.5px;
+}
+
+/* Category box */
+
+.mmodal, .msmodal {
+    display: block;
+    background-color: white;
+    max-width: 70vw;
+    margin: 30px auto 0 auto;
+    border: 2px solid #ddd;
+}
+.msmodal {
+    max-width: 40vw;
+}
+
+.mright, .mleft {
+    margin-bottom: 30px;
+}
+
+ol {
+    margin-left: 50px;
+    padding: 0;
+    list-style-position: inside;
+}
+.mli {
+    position: relative;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin-top: 10px;
+    height: 62px;
+    box-shadow: 1px 1px 1px #ddd;
+}
+.mdelete, .medit {
+    position: absolute;
+    width: 57px;
+}
+.mdelete {
+    bottom: -1px;
+    right: -10px;
+}
+.medit {
+    top: -1px;
+    right: -10px;
+}
+.mright form {
+    margin: 0 50px;
+}
+
+.mright form button {
+    text-align: right;
+}
+.mclose {
+    text-align: right;
+    margin-left: -7px;
+    margin-top: 7px;
+}
+.mclose button {
+    border: 1px solid #ddd;
+    box-shadow: 0 0 1px var(--gray);
+    color: var(--dark);
+}
+.mmiddle {
+    max-width: 35vw;
+    margin: 0 2.5vw 30px 2.5vw;
+}
+.mmiddle label {
+    display: block;
+    padding: 7px 3px;
+    margin-top: 20px;
+    margin-bottom: 0;
+    background: linear-gradient(to right, #eee, white);
+    border-left: 8px solid #ccc;
+}
+.mmiddle input, .mmiddle select, .mmiddle textarea {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.mmiddle p {
+    padding: 0 7px;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
