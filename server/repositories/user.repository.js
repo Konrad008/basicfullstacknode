@@ -20,7 +20,7 @@ async function create(userParam) {
       firstName: userParam.firstName,
       lastName: userParam.lastName,
       username: userParam.username,
-      password: bcrypt.hashSync(userParam.password, 10)
+      hash: bcrypt.hashSync(userParam.password, 10)
     })
     .save();
 }
