@@ -5,7 +5,7 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import {DetailsModal, FormModal} from "../index";
+import { DetailsModal, FormModal } from "../index";
 
 const mapStateToProps = state => {
   const { articles } = state.crudReducer;
@@ -21,6 +21,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 class List extends Component {
+  constructor(props) {
+    super(props);
+    this.user = JSON.parse(localStorage.getItem("user"));
+  }
+
   componentDidMount() {
     this.props.getArticles();
   }
@@ -80,14 +85,18 @@ class List extends Component {
         sortable: false,
         resizable: false,
         width: 70,
-        Cell: props => (
-          <button
-            className="btn btn-success btn-sm tablebuttons"
-            onClick={e => {this.editStuff(e, props.original); this.EditModal.openModal();}}
-          >
-            Edytuj
-          </button>
-        ) // Custom cell components!
+        Cell: props =>
+          this.user.id === parseInt(props.original.uid, 10) && (
+            <button
+              className="btn btn-success btn-sm tablebuttons"
+              onClick={e => {
+                this.editStuff(e, props.original);
+                this.EditModal.openModal();
+              }}
+            >
+              Edytuj
+            </button>
+          )
       },
       {
         Header: "Kasuj",
@@ -95,14 +104,15 @@ class List extends Component {
         sortable: false,
         resizable: false,
         width: 70,
-        Cell: props => (
-          <button
-            className="btn btn-danger btn-sm tablebuttons"
-            onClick={e => this.deleteStuff(e, props.original.id)}
-          >
-            Kasuj
-          </button>
-        )
+        Cell: props =>
+          this.user.id === parseInt(props.original.uid, 10) && (
+            <button
+              className="btn btn-danger btn-sm tablebuttons"
+              onClick={e => this.deleteStuff(e, props.original.id)}
+            >
+              Kasuj
+            </button>
+          )
       }
     ];
     return (
@@ -114,15 +124,19 @@ class List extends Component {
           getTdProps={(state, rowInfo, column) => {
             return {
               onClick: (e, handleOriginal) => {
-                if(column.Header !== "Kasuj" && column.Header !== "Edytuj" && rowInfo) {
+                if (
+                  column.Header !== "Kasuj" &&
+                  column.Header !== "Edytuj" &&
+                  rowInfo
+                ) {
                   this.DetailsModal.openModal(rowInfo.original);
                 }
               }
             };
           }}
         />
-        <DetailsModal ref={instance => this.DetailsModal = instance}/>
-        <FormModal ref={instance => this.EditModal = instance}/>
+        <DetailsModal ref={instance => (this.DetailsModal = instance)} />
+        <FormModal ref={instance => (this.EditModal = instance)} />
       </React.Fragment>
     );
   }

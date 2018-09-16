@@ -1,17 +1,23 @@
-export const connection = (route, method, options = {param: false, body: false}) => {
+import { history } from "./history";
+
+export const connection = (
+  route,
+  method,
+  options = { param: false, body: false }
+) => {
   if (options.param) {
     route = route + options.param;
   }
   let fetchOptions = {
     method: method,
-    headers: authHeader(0),
+    headers: authHeader(0)
   };
 
   if (options.body) {
     fetchOptions = {
       method: method,
       headers: authHeader(1),
-      body: JSON.stringify(options.body),
+      body: JSON.stringify(options.body)
     };
   }
 
@@ -20,16 +26,22 @@ export const connection = (route, method, options = {param: false, body: false})
       return response.json();
     } else {
       if (response.status === 400) {
-        return response.json().then((message) => Promise.reject(message.message));
+        return response.json().then(message => Promise.reject(message.message));
       }
       if (response.status === 401) {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        history.push("/");
 
-        return Promise.reject("Dane autoryzacji nie zostały uwierzytelnione, nastąpiło wylogowanie! errorCode " + response.status);
+        return Promise.reject(
+          "Dane autoryzacji nie zostały uwierzytelnione, nastąpiło wylogowanie! errorCode " +
+            response.status
+        );
       }
       if (response.status === 404) {
-        return Promise.reject("Zasób nie został znaleziony, proszę spróbuj ponownie!");
+        return Promise.reject(
+          "Zasób nie został znaleziony, proszę spróbuj ponownie!"
+        );
       }
       return Promise.reject(response.statusText + " code " + response.status);
     }
@@ -44,8 +56,8 @@ const authHeader = (type = 0) => {
   if (type === 0) {
     if (token) {
       return {
-        "Authorization": "Bearer " + token,
-        "PDUser": user.id
+        Authorization: "Bearer " + token,
+        PDUser: user.id
       };
     } else {
       return {};
@@ -54,9 +66,9 @@ const authHeader = (type = 0) => {
   if (type === 1) {
     if (token) {
       return {
-        "Authorization": "Bearer " + token,
+        Authorization: "Bearer " + token,
         "Content-Type": "application/json",
-        "PDUser": user.id
+        PDUser: user.id
       };
     } else {
       return {

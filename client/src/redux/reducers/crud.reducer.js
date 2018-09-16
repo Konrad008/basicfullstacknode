@@ -7,7 +7,8 @@ const rState = {
     description: "",
     user: "",
     category: "",
-    quantity: ""
+    quantity: "",
+    uid: false
   },
   articles: []
 };
@@ -35,7 +36,7 @@ export function crudReducer(state = rState, action) {
       );
       return { ...state, post: rState.post, articles: [...newArticles] };
     case crudConstants.CLEAR_FORM:
-      return { ...state, post: rState.post};
+      return { ...state, post: rState.post };
     default:
       return state;
   }

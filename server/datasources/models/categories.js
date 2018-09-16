@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     delete: {
       type: DataTypes.BOOLEAN,
       required: true,
-      defaultValue: false,
+      defaultValue: false
     },
-    category: DataTypes.STRING
+    category: DataTypes.STRING,
+    uid: DataTypes.INTEGER
   });
 };

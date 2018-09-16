@@ -1,17 +1,11 @@
 import React, { Component } from "react";
-import { history } from './services/history';
-import { alertActions } from './redux/actions';
-import {
-  PrivateRoute,
-  RegisterPage,
-  Dashboard,
-  LoginPage
-} from "./components";
-import {
-  Router,
-  Route
-} from "react-router-dom";
-import { connect } from 'react-redux';
+import { history } from "./services/history";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { alertActions } from "./redux/actions";
+import { PrivateRoute, RegisterPage, Dashboard, LoginPage } from "./components";
+import { Router, Route } from "react-router-dom";
+import { connect } from "react-redux";
 
 class AppRouter extends Component {
   constructor(props) {
@@ -23,14 +17,19 @@ class AppRouter extends Component {
     });
   }
   render() {
-    const { alert } = this.props;
     return (
       <div className="container-fluid">
-        <div className="col-sm-12">
-          {alert.message &&
-          <div className={`alert ${alert.type}`}>{alert.message}</div>
-          }
-        </div>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
         <Router history={history}>
           <React.Fragment>
             <Route exact path="/" component={LoginPage} />

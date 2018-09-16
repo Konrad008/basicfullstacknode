@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {categoryActions} from "../../redux/actions";
+import { categoryActions } from "../../redux/actions";
 
 const mapDispatchToProps = dispatch => {
   return {
     getCategories: () => dispatch(categoryActions.getAll()),
-    deleteCategory: (id) => dispatch(categoryActions._delete(id)),
-    editCategory: (category) => dispatch(categoryActions.editShow(category))
+    deleteCategory: id => dispatch(categoryActions._delete(id)),
+    editCategory: category => dispatch(categoryActions.editShow(category))
   };
 };
 
@@ -17,6 +17,11 @@ const mapStateToProps = state => {
 };
 
 class CategoryList extends Component {
+  constructor(props) {
+    super(props);
+    this.user = JSON.parse(localStorage.getItem("user"));
+  }
+
   componentDidMount() {
     this.props.getCategories();
   }
@@ -34,28 +39,31 @@ class CategoryList extends Component {
   render() {
     return (
       <ol>
-        {this.props.categories.map((category, index) =>
-          <li className={'mli'} key={index}>
+        {this.props.categories.map((category, index) => (
+          <li className={"mli"} key={index}>
             <span>{category.category}</span>
             <br />
-            <button
-              className="btn btn-danger btn-sm mdelete"
-              onClick={e => this.deleteStuff(e, category.id)}
-            >
-              Kasuj
-            </button>
-            <button
-              className="btn btn-primary btn-sm medit"
-              onClick={e => this.editStuff(e, category)}
-            >
-              Edytuj
-            </button>
+            {this.user.id === parseInt(category.uid, 10) && (
+              <button
+                className="btn btn-danger btn-sm mdelete"
+                onClick={e => this.deleteStuff(e, category.id)}
+              >
+                Kasuj
+              </button>
+            )}
+            {this.user.id === parseInt(category.uid, 10) && (
+              <button
+                className="btn btn-primary btn-sm medit"
+                onClick={e => this.editStuff(e, category)}
+              >
+                Edytuj
+              </button>
+            )}
           </li>
-        )}
+        ))}
       </ol>
-    )
+    );
   }
-
 }
 
 const ConnectedList = connect(
@@ -63,4 +71,4 @@ const ConnectedList = connect(
   mapDispatchToProps
 )(CategoryList);
 
-export {ConnectedList as CategoryList};
+export { ConnectedList as CategoryList };

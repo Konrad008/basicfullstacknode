@@ -3,7 +3,8 @@ import { categoryConstants } from "../constants";
 const rState = {
   category: {
     id: false,
-    name: "",
+    category: "",
+    uid: false
   },
   categories: []
 };
@@ -21,7 +22,6 @@ export function category(state = rState, action) {
         categories: [...state.categories, action.payload]
       };
     case categoryConstants.GET:
-      console.log(action.payload);
       return { ...rState, ...state, categories: [...action.payload] };
     case categoryConstants.DEL:
       const categories = state.categories.filter(
@@ -32,11 +32,15 @@ export function category(state = rState, action) {
       const newArticles = state.categories.map(
         item => (item.id === action.payload.id ? action.payload : item)
       );
-      return { ...state, category: rState.category, categories: [...newArticles] };
+      return {
+        ...state,
+        category: rState.category,
+        categories: [...newArticles]
+      };
     case categoryConstants.CLEAR:
-      return { ...state, category: rState.category};
+      return { ...state, category: rState.category };
     case categoryConstants.EDITSHOW:
-      return { ...state, category: {id: action.payload.id, name: action.payload.category }};
+      return { ...state, category: { ...action.payload } };
     default:
       return state;
   }

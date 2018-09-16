@@ -1,6 +1,6 @@
 import { crudConstants } from "../constants";
 import { crudConnection } from "../../connections";
-import { alertActions } from "./alert.actions";
+import { toast } from "react-toastify";
 
 export const crudActions = {
   addArticle,
@@ -51,15 +51,13 @@ function removeArticle(id) {
   };
 }
 
-
-
 function deleteArticle(id) {
   return dispatch => {
     return crudConnection
       .delete(id)
       .then(() => dispatch(removeArticle(id)))
-      .catch(err => dispatch(alertActions.error(err.toString())));
-  }
+      .catch(err => toast.error(err.toString()));
+  };
 }
 
 function getArticles() {
@@ -67,8 +65,8 @@ function getArticles() {
     return crudConnection
       .get()
       .then(data => dispatch(addArticles(data)))
-      .catch(err => dispatch(alertActions.error(err.toString())));
-  }
+      .catch(err => toast.error(err.toString()));
+  };
 }
 
 function sendArticles(article) {
@@ -77,11 +75,11 @@ function sendArticles(article) {
       return crudConnection
         .add(article)
         .then(data => dispatch(addArticle(data)))
-        .catch(err => dispatch(alertActions.error(err.toString())));
+        .catch(err => toast.error(err.toString()));
     }
     return crudConnection
       .edit(article)
       .then(() => dispatch(editEntry(article)))
-      .catch(err => dispatch(alertActions.error(err.toString())));
+      .catch(err => toast.error(err.toString()));
   };
 }

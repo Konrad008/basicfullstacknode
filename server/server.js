@@ -7,8 +7,8 @@ var formData = require("express-form-data");
 var os = require("os");
 var cors = require("cors");
 var helmet = require("helmet");
-var jwt = require('./services/jwtMiddleware.service');
-const errorHandler = require('./services/errorHandler.service');
+var jwt = require("./services/jwtMiddleware.service");
+const errorHandler = require("./services/errorHandler.service");
 
 var app = express();
 
@@ -17,7 +17,7 @@ const options = {
   autoClean: true
 };
 const corsOptions = {
-  origin: 'http://localhost:3001',
+  origin: "http://localhost:3001",
   optionsSuccessStatus: 200
 };
 
@@ -41,7 +41,7 @@ app.use(cors(corsOptions));
 app.use(helmet());
 app.use(jwt());
 
-app.use("/api", require("./controllers/crud.controller"));
+app.use("/crud", require("./controllers/crud.controller"));
 app.use("/auth", require("./controllers/auth.controller"));
 app.use("/categories", require("./controllers/category.controller"));
 

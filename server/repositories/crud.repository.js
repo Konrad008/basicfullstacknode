@@ -1,28 +1,34 @@
 const seq = require("../datasources/database");
 
 module.exports = {
-  insert,
-  view,
+  get,
+  getOne,
+  add,
   edit,
-  _delete
+  delete: _delete
 };
 
-async function insert(req) {
-  const data = req.body;
-
+async function getOne(req) {
   return await seq.aids
-    .build({
-      name: data.name,
-      description: data.description,
-      user: data.user,
-      category: data.category,
-      quantity: data.quantity
+    .findOne({
+      where: {
+        delete: false,
+        show: true,
+        uid: req.body.uid,
+        id: req.body.id
+      }
     })
-    .save()
-    .then(res => res.dataValues);
+    .then(resp => (resp ? resp.dataValues : false));
 }
 
-async function view() {
+async function add(req) {
+  return await seq.aids
+    .build(req.body)
+    .save()
+    .then(res => (res ? res.dataValues : false));
+}
+
+async function get() {
   return await seq.aids.findAll({
     where: { show: true, delete: false }
   });

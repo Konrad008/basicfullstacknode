@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   categoryActions,
   crudActions,
@@ -16,11 +16,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  const {post} = state.crudReducer;
-  const {users} = state;
-  const {user} = state.authentication;
-  const {categories} = state.category;
-  return {post, users, user, categories};
+  const { post } = state.crudReducer;
+  const { users } = state;
+  const { user } = state.authentication;
+  const { categories } = state.category;
+  return { post, users, user, categories };
 };
 
 class Form extends Component {
@@ -34,24 +34,12 @@ class Form extends Component {
         user: this.props.user.username,
         category: this.props.categories[0].category,
         quantity: this.props.post.quantity,
+        uid: this.props.post.uid,
         submitted: false
       };
     } else {
-      const {
-        id,
-        name,
-        description,
-        user,
-        category,
-        quantity
-      } = this.props.post;
       this.state = {
-        id,
-        name,
-        description,
-        user,
-        category,
-        quantity,
+        ...this.props.post,
         submitted: false
       };
     }
@@ -75,15 +63,14 @@ class Form extends Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.id]: event.target.value});
+    this.setState({ [event.target.id]: event.target.value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const {name, description, user, category, quantity, id} = this.state;
     this.setState({ submitted: true });
     if (this.state.name) {
-      this.props.addArticle({name, description, user, category, quantity, id});
+      this.props.addArticle({ ...this.state });
       if (this.state.id === false) {
         this.setState({
           id: false,
@@ -92,7 +79,8 @@ class Form extends Component {
           user: "",
           category: "",
           quantity: "",
-          submitted: false
+          submitted: false,
+          uid: false
         });
       }
       this.props.closeModal();
@@ -100,7 +88,7 @@ class Form extends Component {
   }
 
   render() {
-    const {users, categories} = this.props;
+    const { users, categories } = this.props;
     return (
       <form
         onSubmit={this.handleSubmit}
@@ -119,9 +107,9 @@ class Form extends Component {
             onChange={this.handleChange}
           />
           {this.state.submitted &&
-          !this.state.name && (
-            <div className="help-block">Pole obowiązkowe!</div>
-          )}
+            !this.state.name && (
+              <div className="help-block">Pole obowiązkowe!</div>
+            )}
           {users.loading && <em>Loading...</em>}
           {users.items && (
             <React.Fragment>
@@ -193,7 +181,7 @@ const ConnectedForm = connect(
   mapStateToProps,
   mapDispatchToProps,
   null,
-  {withRef: true}
+  { withRef: true }
 )(Form);
 
-export {ConnectedForm as Form};
+export { ConnectedForm as Form };

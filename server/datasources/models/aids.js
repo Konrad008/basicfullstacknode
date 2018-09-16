@@ -8,12 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     delete: {
       type: DataTypes.BOOLEAN,
       required: true,
-      defaultValue: false,
+      defaultValue: false
     },
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     user: DataTypes.STRING,
     category: DataTypes.STRING,
-    quantity: DataTypes.STRING
+    quantity: DataTypes.STRING,
+    uid: DataTypes.INTEGER
   });
 };

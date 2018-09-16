@@ -21,7 +21,8 @@ class CategoryForm extends Component {
     super(props);
     this.state = {
       id: false,
-      name: ""
+      category: "",
+      uid: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,10 +32,11 @@ class CategoryForm extends Component {
     if (state.id !== props.category.id) {
       return {
         id: props.category.id,
-        name: props.category.name
-      }
+        category: props.category.category,
+        uid: props.category.uid
+      };
     } else {
-        return null;
+      return null;
     }
   }
 
@@ -49,22 +51,23 @@ class CategoryForm extends Component {
   doClearState() {
     this.setState({
       id: false,
-      name: "",
-      submitted: false
+      category: "",
+      submitted: false,
+      uid: false
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const { name, id } = this.state;
     this.setState({ submitted: true });
 
-    if(this.state.name) {
-      if (!id) {
-        this.props.addCategory({category: this.state.name});
+    if (this.state.category) {
+      if (!this.state.id) {
+        this.props.addCategory({ category: this.state.category });
         this.doClearState();
       } else {
-        this.props.editCategory({id, category: name});
+        // console.log(this.state);
+        this.props.editCategory({ ...this.state });
         this.doClearState();
       }
     }
@@ -82,16 +85,16 @@ class CategoryForm extends Component {
           <label htmlFor="name">Dodaj lub edytuj kategorię!</label>
           <input
             type="text"
-            name="name"
+            name="category"
             className="form-control"
-            id="name"
-            value={this.state.name}
+            id="category"
+            value={this.state.category}
             onChange={this.handleChange}
           />
           {this.state.submitted &&
-          !this.state.name && (
-            <div className="help-block">Pole obowiązkowe!</div>
-          )}
+            !this.state.category && (
+              <div className="help-block">Pole obowiązkowe!</div>
+            )}
         </div>
         <button
           type="submit"

@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const managers = require("../managers/crud.manager");
-const { defaultManager } = managers;
+const { defaultManager, crudManager } = managers;
 
-router.post("/insert", defaultManager.insert());
-router.get("/view", defaultManager.view());
-router.delete("/delete", defaultManager._delete());
-router.put("/edit", defaultManager.edit());
+router.get("/", defaultManager.get());
+router.post("/", crudManager.add());
+router.put("/:id", crudManager.edit());
+router.delete("/:id", crudManager.delete());
 
 module.exports = router;

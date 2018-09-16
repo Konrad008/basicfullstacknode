@@ -1,13 +1,27 @@
 const seq = require("../datasources/database");
 
 module.exports = {
-  getAll,
+  get,
+  getOne,
   add,
   edit,
-  _delete
+  delete: _delete
 };
 
-async function getAll(req) {
+async function getOne(req) {
+  return await seq.categories
+    .findOne({
+      where: {
+        delete: false,
+        show: true,
+        uid: req.body.uid,
+        id: req.body.id
+      }
+    })
+    .then(resp => (resp ? resp.dataValues : false));
+}
+
+async function get(req) {
   return await seq.categories.findAll({
     where: {
       delete: false,
@@ -20,7 +34,7 @@ async function add(req) {
   return await seq.categories
     .build(req.body)
     .save()
-    .then(resp => resp.dataValues);
+    .then(resp => (resp ? resp.dataValues : false));
 }
 
 async function edit(req) {

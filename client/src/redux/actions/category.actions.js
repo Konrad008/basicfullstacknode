@@ -1,6 +1,6 @@
 import { categoryConstants } from "../constants";
-import { alertActions } from "./alert.actions";
 import { categoryConnection } from "../../connections";
+import { toast } from "react-toastify";
 
 export const categoryActions = {
   getAll,
@@ -27,13 +27,12 @@ function clear() {
   return { type: categoryConstants.CLEAR };
 }
 
-
 function _add(category) {
-  return {type: categoryConstants.ADD, payload: category};
+  return { type: categoryConstants.ADD, payload: category };
 }
 
-function _edit(data) {
-  return {type: categoryConstants.EDIT, payload: {id: data.id, category: data.category}}
+function _edit(category) {
+  return { type: categoryConstants.EDIT, payload: category };
 }
 
 function getAll() {
@@ -41,7 +40,7 @@ function getAll() {
     return categoryConnection
       .getAll()
       .then(categories => dispatch(_getAll(categories)))
-      .catch(err => dispatch(alertActions.error(err.toString())));
+      .catch(err => toast.error(err.toString()));
   };
 }
 
@@ -50,17 +49,17 @@ function _delete(id) {
     return categoryConnection
       .delete(id)
       .then(() => dispatch(__delete(id)))
-      .catch(err => dispatch(alertActions.error(err.toString())));
-  }
+      .catch(err => toast.error(err.toString()));
+  };
 }
 
 function add(category) {
   return dispatch => {
     return categoryConnection
       .add(category)
-      .then((category) => dispatch(_add(category)))
-      .catch(err => dispatch(alertActions.error(err.toString())));
-  }
+      .then(category => dispatch(_add(category)))
+      .catch(err => toast.error(err.toString()));
+  };
 }
 
 function edit(category) {
@@ -68,6 +67,6 @@ function edit(category) {
     return categoryConnection
       .edit(category)
       .then(() => dispatch(_edit(category)))
-      .catch(err => dispatch(alertActions.error(err.toString())));
-  }
+      .catch(err => toast.error(err.toString()));
+  };
 }

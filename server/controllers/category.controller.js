@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const managers = require('../managers/category.manager');
-const { defaultManager } = managers;
+const managers = require("../managers/category.manager");
+const { defaultManager, categoryManager } = managers;
 
-router.post('/add', defaultManager.add());
-router.put('/:id', defaultManager.edit());
-router.get('/', defaultManager.getAll());
-router.delete('/:id', defaultManager._delete());
+router.get("/", defaultManager.get());
+router.post("/", categoryManager.add());
+router.put("/:id", categoryManager.edit());
+router.delete("/:id", categoryManager.delete());
 
 module.exports = router;

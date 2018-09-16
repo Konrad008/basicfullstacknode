@@ -4,7 +4,8 @@ const config = require("../datasources/config.json");
 const uuidv4 = require('uuid/v4');
 
 module.exports = {
-  sign
+  sign,
+  decodeHeader
 };
 
 // const redisClient = redis.createClient();
@@ -27,4 +28,9 @@ function sign(id, payload) {
   // redisClient.set(id, uuid);
 
   return token;
+}
+
+function decodeHeader(req) {
+  const token = req.headers.authorization.split(" ")[1];
+  return jwt.decode(token);
 }
