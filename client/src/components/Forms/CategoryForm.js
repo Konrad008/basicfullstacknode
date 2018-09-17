@@ -57,6 +57,11 @@ class CategoryForm extends Component {
     });
   }
 
+  handleClear() {
+    this.doClearState();
+    this.props.clearCategory();
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ submitted: true });
@@ -66,7 +71,6 @@ class CategoryForm extends Component {
         this.props.addCategory({ category: this.state.category });
         this.doClearState();
       } else {
-        // console.log(this.state);
         this.props.editCategory({ ...this.state });
         this.doClearState();
       }
@@ -76,13 +80,14 @@ class CategoryForm extends Component {
   render() {
     return (
       <form
-        onSubmit={this.handleSubmit}
         ref={instance => {
           this.form = instance;
         }}
       >
         <div className="form-group">
-          <label htmlFor="name">Dodaj lub edytuj kategorię!</label>
+          {this.state.id === false ?
+            (<label htmlFor="name">Dodaj kategorię!</label>) :
+            (<label htmlFor="name">Edytuj kategorię!</label>)}
           <input
             type="text"
             name="category"
@@ -96,13 +101,31 @@ class CategoryForm extends Component {
               <div className="help-block">Pole obowiązkowe!</div>
             )}
         </div>
-        <button
-          type="submit"
-          onClick={e => this.handleSubmit(e)}
-          className="btn btn-success btn-lg"
-        >
-          {this.state.id === false ? "Zapisz" : "Edytuj"}
-        </button>
+        {this.state.id === false ? (
+          <button
+            type="submit"
+            onClick={e => this.handleSubmit(e)}
+            className="btn btn-primary btn-lg"
+          >
+            Zapisz
+          </button>
+        ) : (
+          <React.Fragment>
+            <button
+              type="submit"
+              onClick={e => this.handleSubmit(e)}
+              className="btn btn-success btn-lg"
+            >
+              Edytuj
+            </button>
+            <button
+              onClick={() => this.handleClear()}
+              className="btn btn-danger btn-lg"
+            >
+              Anuluj
+            </button>
+          </React.Fragment>
+        )}
       </form>
     );
   }
